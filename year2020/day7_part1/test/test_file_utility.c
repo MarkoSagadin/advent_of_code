@@ -1,5 +1,5 @@
-#include "unity.h"
 #include "file_utility.h"
+#include "unity.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -19,139 +19,162 @@ faded blue bags contain no other bags.
 dotted black bags contain no other bags.
 */
 
-void setUp(void) 
+void setUp(void)
 {
-    // set stuff up here
-    /* Weird path, due to the way ceelding is called*/
-    f = fopen("test/test_input.txt","r"); 
-    if (f == NULL) {
-        printf("No file found!\n");
-    }
+	// set stuff up here
+	/* Weird path, due to the way ceelding is called*/
+	f = fopen("test/test_input.txt", "r");
+	if (f == NULL) {
+		printf("No file found!\n");
+	}
 }
 
-void tearDown(void) 
+void tearDown(void)
 {
-    // clean stuff up here
-    fclose(f);
+	// clean stuff up here
+	fclose(f);
 }
 
-void test_get_num_chars_in_0th_line(void) 
+void test_get_num_chars_in_0th_line(void)
 {
-    int num_chars = get_num_chars_in_nth_line(f, 0);
+	int num_chars = get_num_chars_in_nth_line(f, 0);
 
-    TEST_ASSERT_EQUAL_INT(64, num_chars);
+	TEST_ASSERT_EQUAL_INT(64, num_chars);
 }
 
-void test_get_num_chars_in_1st_line(void) 
+void test_get_num_chars_in_1st_line(void)
 {
-    int num_chars = get_num_chars_in_nth_line(f, 1);
+	int num_chars = get_num_chars_in_nth_line(f, 1);
 
-    TEST_ASSERT_EQUAL_INT(67, num_chars);
+	TEST_ASSERT_EQUAL_INT(67, num_chars);
 }
 
-void test_get_num_chars_in_the_last_line(void) 
+void test_get_num_chars_in_the_last_line(void)
 {
-    int num_chars = get_num_chars_in_nth_line(f, 8);
+	int num_chars = get_num_chars_in_nth_line(f, 8);
 
-    TEST_ASSERT_EQUAL_INT(41, num_chars);
+	TEST_ASSERT_EQUAL_INT(41, num_chars);
 }
 
-void test_get_0th_line(void) 
+void test_get_0th_line(void)
 {
-    int num_chars = get_num_chars_in_nth_line(f, 0) + 1;
-    char * line = malloc(num_chars * sizeof(char));
-    char * expected_line = "light red bags contain 1 bright white bag, "
-                           "2 muted yellow bags.\n";
-    
-    if (line == NULL) {
-        TEST_FAIL_MESSAGE("Not enough memory");
-    }
+	int num_chars = get_num_chars_in_nth_line(f, 0) + 1;
+	char *line = malloc(num_chars * sizeof(char));
+	char *expected_line = "light red bags contain 1 bright white bag, "
+			      "2 muted yellow bags.\n";
 
-    get_nth_line(f, line, num_chars, 0);
+	if (line == NULL) {
+		TEST_FAIL_MESSAGE("Not enough memory");
+	}
 
-    TEST_ASSERT_EQUAL_STRING(expected_line, line);
+	get_nth_line(f, line, num_chars, 0);
+
+	TEST_ASSERT_EQUAL_STRING(expected_line, line);
 }
 
-
-void test_get_4th_line(void) 
+void test_get_4th_line(void)
 {
-    int num_chars = get_num_chars_in_nth_line(f, 4) + 1;
-    char * line = malloc(num_chars * sizeof(char));
-    char * expected_line = "shiny gold bags contain 1 dark olive bag, "
-                           "2 vibrant plum bags.\n";
-    
-    if (line == NULL) {
-        TEST_FAIL_MESSAGE("Not enough memory");
-    }
+	int num_chars = get_num_chars_in_nth_line(f, 4) + 1;
+	char *line = malloc(num_chars * sizeof(char));
+	char *expected_line = "shiny gold bags contain 1 dark olive bag, "
+			      "2 vibrant plum bags.\n";
 
-    get_nth_line(f, line, num_chars, 4);
+	if (line == NULL) {
+		TEST_FAIL_MESSAGE("Not enough memory");
+	}
 
-    TEST_ASSERT_EQUAL_STRING(expected_line, line);
+	get_nth_line(f, line, num_chars, 4);
+
+	TEST_ASSERT_EQUAL_STRING(expected_line, line);
+	free(line);
 }
 
-void test_get_len_of_first_two_words(void) 
+void test_get_len_of_first_two_words(void)
 {
-    char * line = "light red bags contain 1 bright white bag, "
-                   "2 muted yellow bags.\n";
-    int len = get_len_sub_words(line, 0, 2);
+	char *line = "light red bags contain 1 bright white bag, "
+		     "2 muted yellow bags.\n";
+	int len = get_len_sub_words(line, 0, 2);
 
-    TEST_ASSERT_EQUAL_INT(9, len);
+	TEST_ASSERT_EQUAL_INT(9, len);
 }
 
-void test_get_len_of_first_two_words_twice(void) 
+void test_get_len_of_first_two_words_twice(void)
 {
-    char * line = "light red bags contain 1 bright white bag, "
-                   "2 muted yellow bags.\n";
-    int len = get_len_sub_words(line, 0, 2);
-    len = get_len_sub_words(line, 0, 2);
+	char *line = "light red bags contain 1 bright white bag, "
+		     "2 muted yellow bags.\n";
+	int len = get_len_sub_words(line, 0, 2);
+	len = get_len_sub_words(line, 0, 2);
 
-    TEST_ASSERT_EQUAL_INT(9, len);
+	TEST_ASSERT_EQUAL_INT(9, len);
 }
 
-void test_get_len_of_second_word(void) 
+void test_get_len_of_second_word(void)
 {
-    char * line = "light red bags contain 1 bright white bag, "
-                   "2 muted yellow bags.\n";
-    int len = get_len_sub_words(line, 1, 2);
+	char *line = "light red bags contain 1 bright white bag, "
+		     "2 muted yellow bags.\n";
+	int len = get_len_sub_words(line, 1, 2);
 
-    TEST_ASSERT_EQUAL_INT(3, len);
+	TEST_ASSERT_EQUAL_INT(3, len);
 }
 
-void test_get_first_two_words(void) 
+void test_get_first_two_words(void)
 {
-    char * line = "light red bags contain 1 bright white bag, "
-                   "2 muted yellow bags.\n";
-    int len = get_len_sub_words(line, 0, 2) + 1;
-    char * actual_words = malloc(len * sizeof(char));
-    char * expected_words = "light red";
-    
-    get_sub_words(line, actual_words, 0, 2);
+	char *line = "light red bags contain 1 bright white bag, "
+		     "2 muted yellow bags.\n";
+	int len = get_len_sub_words(line, 0, 2) + 1;
+	char *actual_words = malloc(len * sizeof(char));
+	char *expected_words = "light red";
 
-    TEST_ASSERT_EQUAL_STRING(expected_words, actual_words);
+	get_sub_words(line, actual_words, 0, 2);
+
+	TEST_ASSERT_EQUAL_STRING(expected_words, actual_words);
+	free(actual_words);
 }
 
-void test_get_first_eight_words(void) 
+void test_get_first_eight_words(void)
 {
-    char * line = "light red bags contain 1 bright white bag, "
-                   "2 muted yellow bags.\n";
-    int len = get_len_sub_words(line, 0, 8) + 1;
-    char * actual_words = malloc(len * sizeof(char));
-    char * expected_words = "light red bags contain 1 bright white bag,";
-    
-    get_sub_words(line, actual_words, 0, 8);
+	char *line = "light red bags contain 1 bright white bag, "
+		     "2 muted yellow bags.\n";
+	int len = get_len_sub_words(line, 0, 8) + 1;
+	char *actual_words = malloc(len * sizeof(char));
+	char *expected_words = "light red bags contain 1 bright white bag,";
 
-    TEST_ASSERT_EQUAL_STRING(expected_words, actual_words);
+	get_sub_words(line, actual_words, 0, 8);
+
+	TEST_ASSERT_EQUAL_STRING(expected_words, actual_words);
+	free(actual_words);
 }
 
-void test_get_middle_words(void) 
+void test_get_middle_words(void)
 {
-    char * line = "light red bags contain 1 bright white bag, "
-                   "2 muted yellow bags.\n";
-    int len = get_len_sub_words(line, 2, 8) + 1;
-    char * actual_words = malloc(len * sizeof(char));
-    char * expected_words = "bags contain 1 bright white bag,";
-    
-    get_sub_words(line, actual_words, 2, 8);
+	char *line = "light red bags contain 1 bright white bag, "
+		     "2 muted yellow bags.\n";
+	int len = get_len_sub_words(line, 2, 8) + 1;
+	char *actual_words = malloc(len * sizeof(char));
+	char *expected_words = "bags contain 1 bright white bag,";
 
-    TEST_ASSERT_EQUAL_STRING(expected_words, actual_words);
+	get_sub_words(line, actual_words, 2, 8);
+
+	TEST_ASSERT_EQUAL_STRING(expected_words, actual_words);
+	free(actual_words);
+}
+
+void test_get_first_two_words_from_second_line(void)
+{
+	char *expected_bag_color = "bright white";
+
+	char *actual_bag_color = get_sub_words_in_nth_line(f, 2, 0, 2);
+
+	TEST_ASSERT_EQUAL_STRING(expected_bag_color, actual_bag_color);
+	free(actual_bag_color);
+}
+
+void test_get_middle_words_from_third_line(void)
+{
+	char *expected_bag_color = "2 shiny gold bags, 9 faded blue bags.";
+
+	char *actual_bag_color = get_sub_words_in_nth_line(f, 3, 4, 12);
+
+	TEST_ASSERT_EQUAL_STRING(expected_bag_color, actual_bag_color);
+	free(actual_bag_color);
 }
