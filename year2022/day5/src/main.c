@@ -54,29 +54,26 @@ void move_crates(struct crate_stack *crate_stacks, FILE *f, bool use_cratemover_
 {
 	char line[64];
 
-	while (fgets(line, 64, f)) {
-		strtok(line, " "); /* Not needed */
-		int move_num = atoi(strtok(NULL, " "));
-		strtok(NULL, " "); /* Not needed */
-		int src_idx = atoi(strtok(NULL, " ")) - 1;
-		strtok(NULL, " "); /* Not needed */
-		int dst_idx = atoi(strtok(NULL, " ")) - 1;
+	int move_num;
+	int src_id;
+	int dst_id;
 
+	while (fscanf(f, "move %d from %d to %d\n", &move_num, &src_id, &dst_id) == 3) {
 		if (use_cratemover_9001) {
 			struct crate_stack tmp = {0};
 
 			for (size_t i = 0; i < move_num; i++) {
-				char crate = crate_pop(&crate_stacks[src_idx]);
+				char crate = crate_pop(&crate_stacks[src_id - 1]);
 				crate_push(&tmp, crate);
 			}
 			for (size_t i = 0; i < move_num; i++) {
 				char crate = crate_pop(&tmp);
-				crate_push(&crate_stacks[dst_idx], crate);
+				crate_push(&crate_stacks[dst_id - 1], crate);
 			}
 		} else {
 			while (move_num--) {
-				char crate = crate_pop(&crate_stacks[src_idx]);
-				crate_push(&crate_stacks[dst_idx], crate);
+				char crate = crate_pop(&crate_stacks[src_id - 1]);
+				crate_push(&crate_stacks[dst_id - 1], crate);
 			}
 		}
 	}
