@@ -12,8 +12,8 @@ int calc(double time, double dist)
 {
 	/* Basic quadratic formula solution, however some fiddling was needed with the the rounding.
 	 */
-	int x1 = floor((-time + sqrt(time * time - 4.0 * dist)) / (-2.0) + 1.0);
-	int x2 = ceil((-time - sqrt(time * time - 4.0 * dist)) / (-2.0)) - 0.99;
+	int x1 = ceil((-time + sqrt(time * time - 4.0 * dist)) / (-2.0));
+	int x2 = floor((-time - sqrt(time * time - 4.0 * dist)) / (-2.0));
 
 	return x2 - x1 + 1;
 }
